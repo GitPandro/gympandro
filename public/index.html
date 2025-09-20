@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <title>Gym Pandro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="./assets/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="p-4">
+  <h1 class="mb-4">Gym Pandro</h1>
+  <div class="d-grid gap-2">
+    <a class="btn btn-primary" href="sheets.html">Vedi schede</a>
+    <button class="btn btn-success" id="btnNew">Crea nuova scheda (demo: crea cliente)</button>
+  </div>
+  <script>
+    document.getElementById('btnNew').onclick = async () => {
+      const res = await fetch('http://localhost:8081/api/clients', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ full_name: 'Cliente Demo', email: 'demo@example.com' })
+      });
+      alert(res.ok ? 'Cliente creato' : 'Errore');
+    };
+  </script>
+</body>
+</html>

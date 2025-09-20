@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+#definizione servizio db di postgres
+  db:
+    image: postgres:16
+    container_name: gympandro_db
+    restart: unless-stopped
+    environment:
+    # credenziali db
+      POSTGRES_DB: gympandro
+      POSTGRES_USER: gp_user
+      POSTGRES_PASSWORD: gp_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+#questo nome permette di accedere al database tramite la porta 8080
+  adminer:
+    image: adminer:latest
+    container_name: gympandro_adminer
+    restart: unless-stopped
+    environment:
+      ADMINER_DEFAULT_SERVER: db
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+
+volumes:
+  db_data:
