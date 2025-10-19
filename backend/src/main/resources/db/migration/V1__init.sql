@@ -25,9 +25,9 @@ create table if not exists roles (
   name         text not null unique,                -- nome breve del ruolo (es. "TRAINER")
   description  text,                                -- descrizione estesa o note
   "createdAt"  timestamptz not null default now(),  -- Managed.createdAt
-  "createdBy"  uuid references users(id) on delete set null, -- Managed.createdBy (popolato app-side)
+  "createdBy"  uuid,
   "modifiedAt" timestamptz not null default now(),  -- Managed.modifiedAt
-  "modifiedBy" uuid references users(id) on delete set null  -- Managed.modifiedBy (popolato app-side)
+  "modifiedBy" uuid
 );
 
 -- Trigger to maintain modifiedAt
@@ -66,6 +66,10 @@ for each row execute function set_modified_at();
 -- Helpful indexes
 create index if not exists idx_users_assigned_to on users(assigned_to);
 create index if not exists idx_users_role on users(role_id);
+
+alter table roles
+  add constraint roles_createdby_fkey  foreign key ("createdBy")  references users(id) on delete set null,
+  add constraint roles_modifiedby_fkey foreign key ("modifiedBy") references users(id) on delete set null;
 
 -- ==============================
 -- TABLE Exercises (libreria)
