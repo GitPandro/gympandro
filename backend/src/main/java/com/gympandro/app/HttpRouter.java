@@ -1,5 +1,8 @@
 package com.gympandro.app;
 
+import com.gympandro.app.exercises.handler.ExerciseHandler;
+import com.gympandro.app.sheets.handler.SheetExerciseHandler;
+import com.gympandro.app.sheets.handler.SheetHandler;
 import com.gympandro.app.users.handler.RoleHandler;
 import com.gympandro.app.users.handler.UserHandler;
 import com.sun.net.httpserver.HttpExchange;
@@ -23,6 +26,12 @@ public class HttpRouter implements HttpHandler {
                 new UserHandler().handle(exchange);
             } else if (path.startsWith("/api/roles")) {
                 new RoleHandler().handle(exchange);
+            } else if (path.startsWith("/api/sheet-exercises")) {
+                new SheetExerciseHandler().handle(exchange);
+            } else if (path.startsWith("/api/sheets")) {
+                new SheetHandler().handle(exchange);
+            } else if (path.startsWith("/api/exercises")) {
+                new ExerciseHandler().handle(exchange);
             } else {
                 send(exchange, 404, "{\"error\":\"Not Found\"}");
             }

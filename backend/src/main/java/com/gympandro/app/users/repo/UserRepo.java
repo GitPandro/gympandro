@@ -12,16 +12,16 @@ public class UserRepo {
 
     public static List<User> findAll() throws SQLException {
         String sql = """
-            SELECT u.id, u.username, u.name, u.surname, u.email, u.isActive,
-                   u.role_id, r.name AS roleName
-              FROM users u
-              LEFT JOIN roles r ON u.role_id = r.id
-              ORDER BY u.name;
-            """;
+                SELECT u.id, u.username, u.name, u.surname, u.email, u."isActive",
+                       u.role_id, r.name AS roleName
+                  FROM users u
+                  LEFT JOIN roles r ON u.role_id = r.id
+                  ORDER BY u.name;
+                """;
 
         try (Connection c = Db.conn();
-             PreparedStatement ps = c.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+                PreparedStatement ps = c.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()) {
 
             List<User> list = new ArrayList<>();
             while (rs.next()) {
